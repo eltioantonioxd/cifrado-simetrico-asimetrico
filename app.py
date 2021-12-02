@@ -1,7 +1,6 @@
 from flask import Flask, jsonify, request, Response, render_template, redirect
 from flask.helpers import url_for
 from flask_pymongo import PyMongo
-from werkzeug.security import generate_password_hash, check_password_hash
 
 
 app = Flask(__name__, template_folder='templates')
