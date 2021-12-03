@@ -8,6 +8,7 @@ Para la actividad propuesta se hará uso de python flask y mongodb, los cuales d
 ```pip install flask pymongo```
 
 ## Script utilizado
+```python
 from flask import Flask, jsonify, request, Response, render_template, redirect
 from flask.helpers import url_for
 from flask_pymongo import PyMongo
@@ -49,4 +50,4 @@ def not_found(error=None):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=65000, host='192.168.0.4')
+    app.run(debug=True, port=65000, host='192.168.0.4') ```
