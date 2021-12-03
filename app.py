@@ -4,24 +4,24 @@ from flask_pymongo import PyMongo
 
 
 app = Flask(__name__, template_folder='templates')
-app.config['MONGO_URI'] = 'mongodb://localhost/cripto-lab5'
+app.config['MONGO_URI'] = 'mongodb://localhost/cripto-lab5'  #Creación de la bases de datos
 
 mongo = PyMongo(app)
 
 @app.route("/")
 def home():
-    pdf = mongo.db.pdf.find()
+    pdf = mongo.db.pdf.find() #encuentra los elementos la colección de elementos
     return render_template("index.html", pdf=pdf)
 
 @app.route('/pfd/attack', methods=['GET'])
 def create_pdf():
     if request.method == 'GET':
-        nombreDocumento = request.args.get('name')
-        contrasenaDocumento = request.args.get('password')
-        direccionIP = request.remote_addr
-        sistemaOperativo = request.args.get('os')
-        mongo.db.pdf.insert({'name':nombreDocumento,'password':contrasenaDocumento,'ip':direccionIP, 'so':sistemaOperativo})
-        return redirect(url_for( "home"))
+        nameDoc = request.args.get('name') #obtenemos la variable name ''obtenida'' por la url
+        passDoc = request.args.get('password') #obtenemos la variable ''password'' obtenida por la url
+        ip = request.remote_addr
+        systemDoc = request.args.get('os') #obtenemos la variable ''os'' obtenida por la url
+        mongo.db.pdf.insert({'name':nameDoc,'password':passDoc,'ip':ip, 'so':systemDoc})
+        return redirect(url_for("home"))
     else:
         return not_found()
 
@@ -33,6 +33,14 @@ def not_found(error=None):
         'message': 'Resource Not Found ' + request.url,
         'status': 404
     }
+    response = jsonify(message)
+    response.status_code = 404
+    return response
+
+
+if __name__ == '__main__':
+    app.run(debug=True, port=65000, host='192.168.0.4')
+
     response = jsonify(message)
     response.status_code = 404
     return response
